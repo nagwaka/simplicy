@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for simplicy",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nagwaka/simplicy.git"
+  },
+  "keywords": [
+    "backend",
+    "marketplace",
+    "api",
+    "nodejs",
+    "expressjs",
+    "mongodb"
+  ],
+  "author": "Code Singer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nagwaka/simplicy/issues"
+  },
+  "homepage": "https://github.com/nagwaka/simplicy#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.6.2",
+    "nodemon": "^3.1.0",
+    "validator": "^13.12.0"
+  }
+}
