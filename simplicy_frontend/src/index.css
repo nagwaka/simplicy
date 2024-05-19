@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./Config/config.css";
+
+
+*, *:before, *:after {
+    box-sizing: border-box;
+  }
+  
+  html {
+  scroll-behavior: smooth;
+  font-size: 72.5%;
+  }
+
+  @media screen and (max-width: 767px) {
+    html {
+      scroll-behavior: smooth;
+      font-size: 42.5%;
+      }
+    
+    
+  }
+  body {
+    color: var(--text-color);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-base);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-title);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+  a:visited {
+    font-style: italic;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  a:active {
+    background-color: var(--color-light-grey);
+  }
+
+  .button {
+    display: var(--button-display);
+    padding: var(--button-padding);
+    border: var(--button-border);
+    font-size: var(--button-font-size);
+    color: var(--button-color);
+    text-decoration: var(--button-text-decoration);
+    cursor: pointer;
+  }
+  
+  .button:hover, .active {
+    color: var(--button-hover-color);
+    text-decoration: var(--button-hover-text-decoration);
+    background: var(--button-hover-background);
+    transition-duration: var(--transition-duration);
+    transition-property: color, background-color;
+  }
+  
+  .button-primary {
+    color: var(--color-white);
+    background: var(--color-primary);
+  }
+  
+  .button-primary:hover {
+    color: var(--color-primary);
+    background: var(--color-white);
+  }
+
+
+  .col-1-3{
+    /* width: calc((100% / 2) - 2rem); */
+
+  }
+  .or{
+    position: relative;
+    top: 0;
+
+  }
+
+  /* google */
+  .or::before{
+    position: absolute;
+    content:"";
+    display: block;
+    width: 40%;
+    height: 0.2rem;
+    background-color: white;
+    top: 50%;
+    
+  }
+  .or::after{
+    position: absolute;
+    content:"";
+    display: block;
+    width: 40%;
+    height: 0.2rem;
+    background-color: white;
+    right: 0;
+    top: 50%;
+  }
+
+  /* Card TESTIMONIAL
+      ============================= */
+  
+      .card-testimonial {
+        text-align: center;
+      }
+      
+      .card-testimonial .card-avatar {
+        border-radius: 50%;
+        width: 10rem;
+        height: 10rem;
+      }
+      
+      .card-testimonial .card-quote cite {
+        display: block;
+        padding-top: 1rem;
+        color: var(--color-primary);
+      }
+      
+      .card-testimonial .card-quote {
+        position: relative;
+      }
+      
+      .card-testimonial .card-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -4.5rem;
+        left: -1rem;
+        color: #efeded;
+        font-size: 10rem;
+        z-index: -1;
+      }
+      
+
+      [class*='col-'] {
+        margin: 1rem ;
+        
+      }
+      
+      .col-1-3 {
+        width: calc((100% / 2) - 2rem);
+        background-color: red;
+      }
+      
+      .col-1-2 {
+        width: calc((100% / 2) - 2rem);
+
+      }
+
+      
+  @media screen and (max-width: 767px) {
+     .row{
+        flex-direction: column;
+        margin: 0;
+    }
+    [class="col-"] {
+      /* margin: 0 0 3rem 0; */
+    }
+
+    .col-1-2, .col-1-3{
+        width: 100%;
+        /* margin: 0 auto ; */
+
+    }
+   
+
+
+    
+  }
+     
+  .section-header {
+    text-align: var(--section-header-align);
+    padding: var(--section-header-padding);
+  }
+  
+  .section-title {
+    font-size: var(--section-title-font-size);
+    font-weight: var(--section-title-font-weight);
+    line-height: var(--section-title-line-height);
+    margin: var(--section-title-margin);
+  
+  }
+  
+  .section-tagline {
+    color: var(--section-tagline-color);
+    font-family: var(--section-tagline-font-family);
+    text-transform: var(--section-tagline-transform);
+    font-weight: var(--section-tagline-font-weight);
+    margin: var(--section-tagline-margin);
+  }
+  
