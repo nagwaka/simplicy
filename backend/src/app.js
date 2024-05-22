@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
 const productRoutes = require('./routes/productRoutes')
 const setupSwagger = require('./config/swagger');
+const photoRoutes = require('./routes/photoRoutes')
 
 
 // loading env variables
@@ -24,6 +25,7 @@ app.use(cors())
 app.use('/api/auth', authRoutes)
 app.use('/api/users/', userRoutes)
 app.use('/api/products/', productRoutes)
+app.use('/uploads', express.static('uploads'));
 
 // Set up Swagger
 setupSwagger(app);
