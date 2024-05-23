@@ -1,43 +1,43 @@
 const mongoose = require('mongoose')
 const { isEmail, isLowercase } = require('validator')
-const Schema = mongoose.Schema
 
-const userSchema = ({
+const userSchema = new mongoose.Schema({
     fullName : {
         type : String,
+        required : true,
+    },
+    role : {
+        type : String,
+        enum : ['buyer', 'seller'],
         required : true
     },
     email : {
         type : String,
-        required : [true, 'Please enter an email address'],
+        required : true,
         isLowercase : true,
         validate : {
             validator : (value) => isEmail(value),
-            message : 'Please Enter a valid E-mail address'
+            message : '{VALUE} is not a valid email address'
         }
-    },
-    role : {
-        type : String,
-        default : ['buyer', 'seller']
-    },
-    region : {
-        type : String,
-        required : true,
-        default : ['Africa']
-    },
+        },
     password : {
         type : String,
         required : true
     },
-    createdAt : {
-        type : Date,
-        default : Date.now
+    region : {
+        type : String,
+        required : true,
     },
-    updatedAt : {
-        type : Date,
-        default : Date.now
-    }
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      updatedAt: {
+        type: Date,
+        default: Date.now,
+      },
 })
 
-const User = mongoose.model('User'. userSchema)
-module.exports = User
+const User = mongoose.model('User', userSchema)
+
+module.exports = User;
