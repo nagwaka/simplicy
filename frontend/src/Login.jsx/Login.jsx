@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import "./login.css"
 import Header from '../Header/Header';
 import axios from 'axios';
-import {userContext } from '../Config/UserContext';
+// import {userContext } from '../Config/UserContext';
 
-export default function Login() {
+export default function Login({login}) {
 
     const [enableSubmit, setEnableSubmit] = useState(false);
     const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ export default function Login() {
    })
    const navigate = useNavigate()
    const {email, password} = formData
-   const {setUser} = useContext(userContext)
+  //  const {setUser} = useContext(userContext)
 
    
    const handleChange = (e) =>{
@@ -31,7 +31,7 @@ export default function Login() {
       axios.post('http://localhost:3000/api/auth/login', formData)
       .then(({data}) => {
         console.log(data)
-        setUser(data.user)
+        login(data.user)
         const id = data.user._id;
         console.log(id)
         navigate(`/api/user/${id}`)

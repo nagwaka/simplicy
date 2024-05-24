@@ -12,7 +12,7 @@ import DisplayNotifications from './Notofication/DisplayNotifications';
 import { getLatestNotification } from './Config/Utils/Utils';
 import CreateListing from './CreateProduct/CreateListing';
 import axios from 'axios';
-import { UserContext } from './Config/UserContext';
+import { AuthUser, UserContext } from './Config/UserContext';
 import SellerDashboard from './Dashboards/SellerDashboardr';
 import IndexPage from './IndexPage/IndexPage';
 
@@ -27,7 +27,7 @@ export class App extends Component {
     super(props); 
       this.state = {
         displayDrawer : false,
-        // user: setUser,
+        user: AuthUser,
         // logOut: this.logOut,
         listNotifications : [
           {
@@ -52,7 +52,7 @@ export class App extends Component {
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-    // this.login = this.logIn.bind(this);
+    this.login = this.logIn.bind(this);
     // this.logOut = this.logOut.bind(this)
 
   }
@@ -62,15 +62,15 @@ export class App extends Component {
   //   });
   // }
 
-  // logIn = (email, password) => {
-  //   this.setState({
-  //     user: {
-  //       email: email,
-  //       password: password,
-  //       isLoggedIn: true,
-  //     }
-  //   });
-  // };
+  logIn = (user) => {
+    this.setState({
+      user: {
+        user,
+        isLoggedIn: true,
+      }
+    });
+    console.log(user)
+  };
   markNotificationAsRead = (id) => {
     this.setState(prevState => ({
       listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
@@ -105,7 +105,8 @@ export class App extends Component {
     return (
       <div>
          <div className={css(styles.AppBody)}>
-         <UserContext>
+         <UserContext.Provider value={{AuthUser: this.state.user,
+          logOut: this.state.logOut,}}>
         
           <DisplayNotifications
             displayDrawer={this.state.displayDrawer}
@@ -117,14 +118,15 @@ export class App extends Component {
           
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path={"/api/auth/login"} element={<Login/>}/>
-            <Route path={"/api/auth/signup"} element={<Signup/>}/>
+            <Route path={"/api/auth/login"} element={<Login login={this.logIn}/>}/>
+            <Route path={"/api/auth/signup"} element={<Signup signup={this.logIn}/>}/>
             <Route path={"/api/user/:id"} element={<Dashboard />}/>
             <Route path={"/index"} element={<IndexPage/>}/>
             {/* <Route path={"/api/user/:id"} element={<SellerDashboard />}/> */}
-            <Route path={"/api/newProduct/:id"} element={<CreateListing />}/>
+            {this.state.user.isLoggedIn ?
+            <Route path={"/api/newProduct"} element={<CreateListing id={this.state.user.user._id} />}/>: ""}
           </Routes>
-         </UserContext>
+         </UserContext.Provider>
         
           </div>
         

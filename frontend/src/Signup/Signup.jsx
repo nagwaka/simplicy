@@ -1,10 +1,9 @@
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
-export default function Signup() {
+export default function Signup({signup}) {
 
     const [enableSubmit, setEnableSubmit] = useState(false);
     const [formData, setFormData] = useState({
@@ -33,6 +32,7 @@ export default function Signup() {
         axios.post('http://localhost:3000/api/auth/signup', formData)
         .then(({data}) => {
           console.log(data)
+          signup(data.savedUser.role)
           const role = data.savedUser.role;
           navigate(`/api/users/${role}`)
 

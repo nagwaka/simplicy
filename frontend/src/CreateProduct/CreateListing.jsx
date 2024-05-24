@@ -7,7 +7,7 @@ import Photos from '../Config/Component/Photos';
 import Cookies from 'js-cookie';
 
 
-export default function CreateListing() {
+export default function CreateListing({id}) {
   
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [role, setrole] = useState("");
@@ -22,7 +22,7 @@ export default function CreateListing() {
  })
  const navigate = useNavigate()
  const {name, description, category,price, stock, images, photoLinks} = formData
-
+//  console.log(id)
 
 
  const handleChange = (e) =>{
@@ -38,7 +38,7 @@ export default function CreateListing() {
     axios.post('http://localhost:3000/api/products/newProduct', formData)
     .then(({data}) => {
       console.log(data)
-      // navigate(`/api/user/${id}`)
+      navigate(`/api/user/${id}`)
 
     })
     .catch((err) => {
