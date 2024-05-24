@@ -1,16 +1,15 @@
 import { StyleSheet, css } from 'aphrodite'
 import React, { useContext, useEffect, useState } from 'react';
 // import { AiOutlineUser } from 'react-icons/ai'
-import { UserContext } from '../Config/UserContext';
+import { userContext } from '../Config/UserContext';
 import './header.css'
 import { Link } from 'react-router-dom';
 import Notification from '../Notofication/Notification';
 
 export default function Header({login, signup, role,  handleDisplayDrawer }) {
 
-  const {user} = useContext(UserContext)
+  const {user} = useContext(userContext)
 
-  console.log(user)
 
 
   return (
@@ -45,8 +44,8 @@ export default function Header({login, signup, role,  handleDisplayDrawer }) {
        </div>
 
 
-       {role ? (
-        <Notification  handleDisplayDrawer= {handleDisplayDrawer}/>
+       {user != null ? (
+        <Notification userName={user}  handleDisplayDrawer= {handleDisplayDrawer}/>
        ): ""}
 
       </div>

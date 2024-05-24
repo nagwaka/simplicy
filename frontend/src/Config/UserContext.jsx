@@ -1,25 +1,32 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 export const userContext = createContext({});
 
+export function UserContext({children}){
+    const [user, setUser] = useState(null);
+    const [login, setlogin] = useState(false);
+    const [logOut, setLogOut] = useState(false);
+ 
 
-//fetch here 
-//sending from signup/login - {token, user role }
-//login
+    // useEffect(() =>{
+    //     if (user != null ) {
+    //         axios.get('/profile')
+    //         .then(({data}) => {
+    //             setUser(data)
+    //             console.log(user)
+    //             setlogin(true)
 
+    //         })
+    //     }
 
-export const user = {
-    email: "",
-    password: "",
-    isLoggedIn: false,
-  };
-  
-  export function logOut() {
-    user.isLoggedIn = false;
-  }
-  
-        
-export const UserContext = createContext({
-    user,
-    logOut,
-  });
+    // }, [])
+
+   
+    return(
+        <userContext.Provider value={{user, setUser, login, logOut, setLogOut}}>
+            {children}
+        </userContext.Provider>
+    )
+}
+

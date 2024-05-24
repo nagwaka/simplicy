@@ -30,9 +30,11 @@ export default function Signup() {
    
     const submit = (e) =>{
         e.preventDefault()//lthis
-        axios.post('http://localhost:5000/api/auth/signup', formData)
+        axios.post('http://localhost:3000/api/auth/signup', formData)
         .then(({data}) => {
           console.log(data)
+          const role = data.savedUser.role;
+          navigate(`/api/users/${role}`)
 
         })
         .catch((err) => {
@@ -46,14 +48,17 @@ export default function Signup() {
 
     
   useEffect (() => {
-    if (email !== "" && password !== "") {
+    if (
+      email !== "" && password !== ""
+      && role !== "" && region !== "" &&
+      fullName !== "") {
       setEnableSubmit(true);
     } else {
       if (enableSubmit !== false) {
         setEnableSubmit(false);
       }
     }
-  }, [email, password, enableSubmit]);
+  }, [email, password, enableSubmit, role, region, fullName]);
   return (
     <>
     {/* <Header signup="signup"/> */}
@@ -68,7 +73,7 @@ export default function Signup() {
           </div>
           <div className="column form-container">
               <div className="form">
-                <form onSubmit={submit}  className={''}>
+                <form   className={''}>
                   
                       <h1 className="mb-6 text-center">Register with Us!!!</h1>
                         <div className="field-container ">
@@ -83,6 +88,8 @@ export default function Signup() {
                                 id="fullName"
                                 placeholder='John Doe'
                                 value={fullName}
+                                autoComplete='off'
+                                required
                                 onChange={handleChange}
                                 />
                               
@@ -97,8 +104,10 @@ export default function Signup() {
                                 type='email' 
                                 name='email'
                                 id="email"
+                                autoComplete='off'
                                 placeholder='JohnDoe@gmail.com'
                                 value={email}
+                                required
                                 onChange={handleChange}
                                 />
                               
@@ -125,6 +134,8 @@ export default function Signup() {
                                 name='region'
                                 id="region"
                                 value={region}
+                                required
+                                autoComplete='off'
                                 placeholder='Lagos'
                                 onChange={handleChange}
                                 />
@@ -143,8 +154,10 @@ export default function Signup() {
                                 type='password' 
                                 name='password'
                                 id="password"
+                                autoComplete='off'
                                 value={password}
                                 placeholder='**********'
+                                required
                                 onChange={handleChange}
                                 />
                                 <h3 className="">
@@ -155,7 +168,7 @@ export default function Signup() {
 
                           </div>
                           
-                          <input className='button' type="submit" value="login" />
+                          <input onClick={submit} disabled={!enableSubmit} className='button' type="submit" value="login" />
                      
                       </div>
                 </form>

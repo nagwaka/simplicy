@@ -18,7 +18,7 @@ const opacityAnimation = {
     "100%": { transform: "translateY(0px)" },
   };
 
-export default function Notification({handleDisplayDrawer}) {
+export default function Notification({handleDisplayDrawer, userName}) {
   const handleShow = () => {
     handleDisplayDrawer();
   };
@@ -32,9 +32,9 @@ export default function Notification({handleDisplayDrawer}) {
          className={css(styles.menuItem, styles.icon)}  />
 
        
-        <div className="flex items-center name-logo  p-2 " >
-            <h1 className='text-3xl'>Oke</h1>
-            <LuUserCircle  className={`'icon-logo'${css(styles.userIcon)}`}  />       
+        <div className="flex items-center name-logo " >
+            <h1 className='text-6xl pr-4'>{userName && userName.fullName[0]}</h1>
+            <LuUserCircle  className={`ml-4'icon-logo'`} size="30"  />       
         </div>  
     </div>
    

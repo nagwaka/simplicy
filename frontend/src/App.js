@@ -9,8 +9,14 @@ import Home from './Home/Home';
 import Dashboard from './Dashboards/Dashboard';
 import React, { Component } from 'react'
 import DisplayNotifications from './Notofication/DisplayNotifications';
-import { user } from './Config/UserContext';
 import { getLatestNotification } from './Config/Utils/Utils';
+import CreateListing from './CreateProduct/CreateListing';
+import axios from 'axios';
+import { UserContext } from './Config/UserContext';
+import SellerDashboard from './Dashboards/SellerDashboardr';
+
+axios.defaults.baseURL = 'http://localhost:3000/api/'
+axios.defaults.withCredentials = true;//check the cookies not finished
 
 export class App extends Component {
   
@@ -20,8 +26,8 @@ export class App extends Component {
     super(props); 
       this.state = {
         displayDrawer : false,
-        user: user,
-        logOut: this.logOut,
+        // user: setUser,
+        // logOut: this.logOut,
         listNotifications : [
           {
             id:1,
@@ -31,7 +37,7 @@ export class App extends Component {
           {
             id:2,
             type: "urgent",
-            value:"New resume available"
+            value:"New resume availabletoday"
           },
           {
             id:3,
@@ -45,25 +51,25 @@ export class App extends Component {
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-    this.login = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this)
+    // this.login = this.logIn.bind(this);
+    // this.logOut = this.logOut.bind(this)
 
   }
-  logOut() {
-    this.setState({
-      user: user
-    });
-  }
+  // logOut() {
+  //   this.setState({
+  //     user: user
+  //   });
+  // }
 
-  logIn = (email, password) => {
-    this.setState({
-      user: {
-        email: email,
-        password: password,
-        isLoggedIn: true,
-      }
-    });
-  };
+  // logIn = (email, password) => {
+  //   this.setState({
+  //     user: {
+  //       email: email,
+  //       password: password,
+  //       isLoggedIn: true,
+  //     }
+  //   });
+  // };
   markNotificationAsRead = (id) => {
     this.setState(prevState => ({
       listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
@@ -97,7 +103,9 @@ export class App extends Component {
   render() {
     return (
       <div>
-          <div className={css(styles.AppBody)}>
+         <div className={css(styles.AppBody)}>
+         <UserContext>
+        
           <DisplayNotifications
             displayDrawer={this.state.displayDrawer}
             listNotifications={this.state.listNotifications}
@@ -105,13 +113,16 @@ export class App extends Component {
             handleDisplayDrawer= {this.handleDisplayDrawer}
             markNotificationAsRead={this.markNotificationAsRead}/>
           <Header  handleDisplayDrawer= {this.handleDisplayDrawer} role="buyer"/>
-        
+          
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path={"/api/auth/login"} element={<Login/>}/>
             <Route path={"/api/auth/signup"} element={<Signup/>}/>
             <Route path={"/api/user/:id"} element={<Dashboard />}/>
+            {/* <Route path={"/api/user/:id"} element={<SellerDashboard />}/> */}
+            <Route path={"/api/newProduct"} element={<CreateListing />}/>
           </Routes>
+         </UserContext>
         
           </div>
         

@@ -1,8 +1,10 @@
 import { StyleSheet, css } from 'aphrodite';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import "./login.css"
 import Header from '../Header/Header';
+import axios from 'axios';
+import {userContext } from '../Config/UserContext';
 
 export default function Login() {
 
@@ -13,6 +15,7 @@ export default function Login() {
    })
    const navigate = useNavigate()
    const {email, password} = formData
+   const {setUser} = useContext(userContext)
 
    
    const handleChange = (e) =>{
@@ -21,11 +24,24 @@ export default function Login() {
          [e.target.id] : e.target.value
        }))
      }
-   const submit = (e) =>{
-       e.preventDefault()
-       console.log(formData)
-     }
 
+
+     const submit = (e) =>{
+      e.preventDefault()//lthis
+      axios.post('http://localhost:3000/api/auth/login', formData)
+      .then(({data}) => {
+        console.log(data)
+        setUser(data.user)
+        const id = data.user._id;
+        console.log(id)
+        navigate(`/api/user/${id}`)
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      console.log(formData)
+  }
     
 
     
@@ -66,6 +82,8 @@ export default function Login() {
                                 id="email"
                                 placeholder='JohnDoe@gmail.com'
                                 value={email}
+                                autoComplete='off'
+                                required
                                 onChange={handleChange}
 
                                
@@ -84,6 +102,8 @@ export default function Login() {
                                 id="password"
                                 placeholder='*********'
                                 value={password}
+                                autoComplete='off'
+                                required
                                 onChange={handleChange}
                                 />
                                 <h3 className="">
@@ -93,7 +113,7 @@ export default function Login() {
                                 </div>
 
                           </div>
-                          <input className='button' type="submit" value="login" />
+                          <input className='button' disabled={!enableSubmit} type="submit" value="login" />
 
                           <div className='text-center flex-col items-center'>
                               <h2 className='or'>OR</h2>
@@ -127,7 +147,7 @@ export default function Login() {
   
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   hide:{
     
     "@media (max-width: 767px)": {
