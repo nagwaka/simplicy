@@ -14,6 +14,7 @@ import CreateListing from './CreateProduct/CreateListing';
 import axios from 'axios';
 import { UserContext } from './Config/UserContext';
 import SellerDashboard from './Dashboards/SellerDashboardr';
+import IndexPage from './IndexPage/IndexPage';
 
 axios.defaults.baseURL = 'http://localhost:3000/api/'
 axios.defaults.withCredentials = true;//check the cookies not finished
@@ -119,8 +120,9 @@ export class App extends Component {
             <Route path={"/api/auth/login"} element={<Login/>}/>
             <Route path={"/api/auth/signup"} element={<Signup/>}/>
             <Route path={"/api/user/:id"} element={<Dashboard />}/>
+            <Route path={"/index"} element={<IndexPage/>}/>
             {/* <Route path={"/api/user/:id"} element={<SellerDashboard />}/> */}
-            <Route path={"/api/newProduct"} element={<CreateListing />}/>
+            <Route path={"/api/newProduct/:id"} element={<CreateListing />}/>
           </Routes>
          </UserContext>
         

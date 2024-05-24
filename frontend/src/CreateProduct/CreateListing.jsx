@@ -1,25 +1,30 @@
 import { css } from 'aphrodite'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { styles } from '../Login.jsx/Login';
 import Photos from '../Config/Component/Photos';
+import Cookies from 'js-cookie';
+
 
 export default function CreateListing() {
   
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const [role, setrole] = useState("");
   const [formData, setFormData] = useState({
       name: "",
-      desc: "",
+      description: "",
       category:"",
       price:"",
-      photos:[],
+      images:[],
+      stock:"",
       photoLinks:""
  })
  const navigate = useNavigate()
- const {name, desc, category,price, photos, photoLinks} = formData
+ const {name, description, category,price, stock, images, photoLinks} = formData
 
- 
+
+
  const handleChange = (e) =>{
      setFormData((prev) =>({
        ...prev,
@@ -30,7 +35,7 @@ export default function CreateListing() {
 
    const submit = (e) =>{
     e.preventDefault()//lthis
-    axios.post('http://localhost:3000/api/products/newProducts', formData)
+    axios.post('http://localhost:3000/api/products/newProduct', formData)
     .then(({data}) => {
       console.log(data)
       // navigate(`/api/user/${id}`)
@@ -51,6 +56,8 @@ useEffect (() => {
       setEnableSubmit(false);
     }
   }
+ 
+
 }, [name, price, enableSubmit]);
 
 
@@ -97,10 +104,10 @@ async function uploadPhoto(e){
       console.log(fileName)
       setFormData((prev) => ({
         ...prev,
-        photos: [...prev.photos, fileName],
+        images: [...prev.images, fileName],
       }))
 
-      console.log(photos)
+      console.log(images)
    
   } catch (error) {
     console.error('Error adding photo link:', error)
@@ -109,18 +116,18 @@ async function uploadPhoto(e){
 
 function removePhoto(e, fileName){
   e.preventDefault()
-  const updatedPhotos = photos.filter((photo) => photo !== fileName);
+  const updatedPhotos = images.filter((photo) => photo !== fileName);
 
   // Update the photos property in the state
   setFormData((prev) => ({
     ...prev,
-    photos: updatedPhotos,
+    images: updatedPhotos,
   }));
 }
 function selectAsMainPhoto(e, fileName){
   e.preventDefault()
   const addedPhotoWithoutSelected = 
-  photos.filter(photo => photo !== fileName)
+  images.filter(photo => photo !== fileName)
   const newAddedPhoto = [fileName, ...addedPhotoWithoutSelected]
   // Update the photos property in the state
   setFormData((prev) => ({
@@ -157,14 +164,14 @@ function selectAsMainPhoto(e, fileName){
                           </div>
                           <div className='column input'>
                             <label className={css(styles.label)} 
-                              htmlFor="email">Description:</label>
+                              htmlFor="description">Description:</label>
                                 <div className='row input-container'>
                                 <input
                                 type='text' 
-                                name='desc'
-                                id="desc"
+                                name='description'
+                                id="description"
                                 placeholder='Apple Desc'
-                                value={desc}
+                                value={description}
                                 autoComplete='off'
                                 required
                                 onChange={handleChange}
@@ -194,6 +201,7 @@ function selectAsMainPhoto(e, fileName){
                                 </div>
 
                           </div>
+                          <div className='flex gap-8'>
                           <div className='column input'>
                             <label className={css(styles.label)} 
                               htmlFor="email">Price:</label>
@@ -212,17 +220,39 @@ function selectAsMainPhoto(e, fileName){
                               
                                 </div>
 
+                             </div>
+
+                             <div className='column input'>
+                            <label className={css(styles.label)} 
+                              htmlFor="email">Stock:</label>
+                                <div className='row input-container'>
+                                <input
+                                type='number' 
+                                name='stock'
+                                id="stock"
+                                placeholder='40'
+                                value={stock}
+                                autoComplete='off'
+                                required
+                                onChange={handleChange}
+ 
+                                />
+                              
+                                </div>
+
+                          </div>
                           </div>
                           <label className={`${css(styles.label)} -mb-4`} 
                               htmlFor="email">Images:</label>
                           <Photos 
                               photoLinks={photoLinks} 
-                              photos={photos}
+                              photos={images}
                               uploadPhoto ={uploadPhoto}
                               addPhotoLink ={addPhotoLink}
                               handleChange={handleChange}
                               removePhoto={removePhoto}
                               selectAsMainPhoto={selectAsMainPhoto}/>
+                           
 
                 </div>
 

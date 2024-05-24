@@ -22,11 +22,11 @@ export default function Dashboard() {
 
   const PageReturn = (page) => {
     if (page === "buyer") {
-      return <BuyerDashboard/>
+      return <BuyerDashboard role={role}/>
     } else if (page === "seller") {
-      return <SellerDashboard/>
+      return <SellerDashboard role={role}/>
     } else {
-      return "Please Login"
+      return <SellerDashboard role={role}/>
     }
 
   }

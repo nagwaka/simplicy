@@ -1,41 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Loading from '../Config/Component/Loading/Loading'
+import ProductPage from '../ProductPage/ProductPage'
 
 
-export default function SellerDashboard() {
+export default function SellerDashboard({role}) {
 
   const [ isLoading, setIsLoading ] = useState(true)//kola
 
 
-  const [ products, setProduct ] = useState([
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":"",
-      "stock":""
-    }
-])
 
    
 
-    // useEffect(() => {
+     
 
-    //     console.log(id)
-    //     axios.get(`http://localhost:5000/api/user/${id}/${role}`).then(({data}) =>{
-    //         setEnrolledCourses(data)
-    //         console.log(enrolledCourses.course)
-    //     })
-    // }) 
 
   return (
-    <div className=''>
+    <div className=' flex column gap-[2rem] justify-center'>
       
-      <h1 className='text-white text-center'>Seller's Page load</h1>
-            {isLoading ? 
-            <Loading/> : ""}
+      <h1 className='text-white text-center mt-4'>Seller's Page</h1>
+            {/* {isLoading ? 
+            <Loading/> : <ProductPage role={role}/>} */}
+            <Link to={`/api/newProduct`}>
+            
+            <button className='button'>Add Product</button>
+            </Link>
+
+            <ProductPage role={role}/>
         
     </div>
   )
