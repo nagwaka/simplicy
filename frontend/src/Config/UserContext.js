@@ -6,7 +6,6 @@ export const AuthUser = {
   user: {
 
   },
-  login: "",
   isLoggedIn: false,
 };
 

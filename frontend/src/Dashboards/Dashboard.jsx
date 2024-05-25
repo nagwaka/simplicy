@@ -5,6 +5,7 @@ import SellerDashboard from './SellerDashboardr'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from '../Config/UserContext'
+import ProductPage from '../ProductPage/ProductPage'
 
 export default function Dashboard() {
 
@@ -27,7 +28,7 @@ export default function Dashboard() {
     } else if (page === "seller") {
       return <SellerDashboard role={role}/>
     } else {
-      return <SellerDashboard role={role}/>
+      return <ProductPage/>
     }
 
   }

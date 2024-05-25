@@ -7,7 +7,7 @@ import Photos from '../Config/Component/Photos';
 import Cookies from 'js-cookie';
 
 
-export default function CreateListing({id}) {
+export default function CreateListing({id, user}) {
   
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [role, setrole] = useState("");
@@ -33,17 +33,30 @@ export default function CreateListing({id}) {
    }
 
 
-   const submit = (e) =>{
+   const submit = async (e) =>{
     e.preventDefault()//lthis
-    axios.post('http://localhost:3000/api/products/newProduct', formData)
-    .then(({data}) => {
-      console.log(data)
-      navigate(`/api/user/${id}`)
+    const token = Cookies.get("token")
+    console.log(token)
 
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    if (!token) {
+      console.error('user not authorized');
+      return;
+    }
+   
+      axios.post(`http://localhost:3000/api/products/newProduct`, formData,  {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+        })
+          .then(({data}) => {
+            console.log(data)
+            navigate(`/api/user/${id}`)
+      
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    
 }
   
 
@@ -94,7 +107,7 @@ async function uploadPhoto(e){
       data.append('photos', file[i] )
   }
   try {
-  const responses = await axios.post('http://localhost:3000/photos/uploads', data, {
+  const responses = await axios.post('http://localhost:3000/api/photos/uploads', data, {
       headers: {'Content-Type': 'multipart/form-data'}
   });
       

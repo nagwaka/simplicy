@@ -24,62 +24,34 @@ export default function ProductPage({role}) {
 //     }, [])
   console.log(role)
   
-  const [ products, setProduct ] = useState([
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":[],
-      "stock":""
-    },
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":[],
-      "stock":""
-    },
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":[],
-      "stock":""
-    },
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":[],
-      "stock":""
-    },
-    {
-      "name": "",
-      "desc":"",
-      "category": "",
-      "price":"",
-      "images":[],
-      "stock":""
-    }
-])
+  const [ products, setProducts ] = useState(
+   [])
+
+useEffect(()=> {
+ 
+    axios.get("http://localhost:3000/api/products/")
+    .then((response) => {
+      console.log(response.data);
+        setProducts(response.data);
+    }) .catch ((error) => {
+        console.log(error)
+    })
+ 
+}, [])
   
   return (
   
-        <div className='grid gap-[4rem] mt-4 grid-cols-3 lg:grid-cols-6 md:grid-cols-4'>
+        <div className='grid gap-[4rem]  text-black mt-4 grid-cols-3 lg:grid-cols-6 md:grid-cols-4'>
           {products.length > 0 && products.map(product => (
             <Link to={'/account/products/' + product._id} className='flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl'>
               <div className='w-32 h-32 bg-gray-300'>
                 {product.images.length && ( 
-                  <img src={'http://localhost:3001/uploads/' + product.images[0]} alt=""/> 
+                  <img src={'http://localhost:3000/uploads/' + product.images[0]} alt=""/> 
                 ) }
               </div>
              <div className='grow-0 shrink'>
              <h2 className='text-xl'>{product.title}</h2>
-             <p className='text-sm mt-2'>{product.desc}</p>
+             <p className='text-sm mt-2'>{product.description}</p>
              <p className='text-sm mt-2'>{product.category}</p>
              <p className='text-sm mt-2'>{product.stock}</p>
              </div>

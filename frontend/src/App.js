@@ -124,7 +124,7 @@ export class App extends Component {
             <Route path={"/index"} element={<IndexPage/>}/>
             {/* <Route path={"/api/user/:id"} element={<SellerDashboard />}/> */}
             {this.state.user.isLoggedIn ?
-            <Route path={"/api/newProduct"} element={<CreateListing id={this.state.user.user._id} />}/>: ""}
+            <Route path={"/api/newProduct"} element={<CreateListing id={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
           </Routes>
          </UserContext.Provider>
         
