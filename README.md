@@ -233,5 +233,5 @@ To be integrated into Simplicy Frontend
 ## Authors
 
 - [Code Singer](https://www.github.com/Code-Gale)
-- [nagwaka] (https://github.com/nagwaka)
-- [Oke Kolawole Sunday] (https://github.com/okekolawolesunday009)
+- [nagwaka](https://github.com/nagwaka)
+- [Oke Kolawole Sunday](https://github.com/okekolawolesunday009)
