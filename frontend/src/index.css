@@ -73,6 +73,19 @@
     color: var(--color-white);
     background: var(--color-primary);
   }
+
+  .button-logout {
+    color: var(--color-primary);
+    background: var(--color-red);
+    display: var(--button-display);
+    padding: var(--button-padding);
+    border: var(--button-border);
+    font-size: var(--button-font-size);
+    text-decoration: var(--button-text-decoration);
+    cursor: pointer;
+    /* width: 100%; */
+
+  }
   
   .button-primary:hover {
     color: var(--color-primary);

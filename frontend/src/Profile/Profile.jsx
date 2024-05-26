@@ -79,8 +79,8 @@ export default function Profile({id, login}) {
     <div className='section section-bg'>
         <div className="container mx-auto">
       
-              <div className="form mx-auto">
-                <form   className={'mx-auto'}>
+              <div className="form mx-auto pt-10">
+                <form   className={'mx-auto pt-10'}>
                   
                       <h1 className="mb-6 text-center">{profile && profile.fullName}'s profile!!!</h1>
                         <div className="field-container ">
@@ -97,14 +97,12 @@ export default function Profile({id, login}) {
                                 value={email}
                                 autoComplete='off'
                                 required
-                                disabled={edit}
+                                disabled
                                 onChange={handleChange}
 
                                
                                 />
-                                <h3 className="">
-                                  <MdEdit size="20" fill="green" />
-                                </h3>
+                                  <MdEdit onClick={handleEdit} size="20" fill="green" />
                               
                                 </div>
 
@@ -121,19 +119,18 @@ export default function Profile({id, login}) {
                                 value={fullName}
                                 autoComplete='off'
                                 required
-                                disabled={edit}
+                                disabled
                                 onChange={handleChange}
                                 />
-                                <h3 className="">
-                                  <MdEdit size="20" fill="green" />kk
-                                </h3>
+                               
+                                  <MdEdit onClick={handleEdit}  size="20" fill="green" />
                                 </div>
 
                           </div>
                           <div className='column input '>
                             <label className={css(styles.label)} 
                               htmlFor="FullName">Region:</label>
-                                <div className='  row input-container'>
+                                <div className='  row input-container '>
                                 <input
                                 type='text' 
                                 name='region'
@@ -142,12 +139,10 @@ export default function Profile({id, login}) {
                                 value={region}
                                 autoComplete='off'
                                 required
-                                disabled={edit}
+                                disabled
                                 onChange={handleChange}
                                 />
-                                <h3 className="">
-                                  <MdEdit size="20" fill="green" />
-                                </h3>
+                                  <MdEdit onClick={handleEdit}  size="20" fill="green" />
                                 </div>
 
                           </div>

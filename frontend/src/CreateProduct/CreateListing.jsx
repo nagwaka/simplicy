@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { styles } from '../Login.jsx/Login';
 import Photos from '../Config/Component/Photos';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 
 export default function CreateListing({userId, user}) {
@@ -52,10 +53,13 @@ export default function CreateListing({userId, user}) {
       })
          .then(res => {
               console.log(res)
+              toast.success("product successful added")
               navigate(`/api/user/${userId}`)
         })
         .catch((err) => {
           console.log(err)
+          toast.success("product addition unsuccessful ")
+
         })
 
       } else {
@@ -66,11 +70,14 @@ export default function CreateListing({userId, user}) {
           })
             .then(({data}) => {
               console.log(data)
+              toast.success("product successful updated")
               navigate(`/api/user/${id}`)
         
             })
             .catch((err) => {
               console.log(err)
+              toast.error("product not updated ")
+
             })
 
       }

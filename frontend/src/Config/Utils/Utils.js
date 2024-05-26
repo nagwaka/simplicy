@@ -5,11 +5,11 @@ export function getFullYear(){
 
 export function getFooterCopy(isIndex) {
     if (isIndex === true) {
-        return 'Holberton School';
+        return 'Simplicy';
     } else {
-        return 'Holberton School main dashboard';
+        return 'Simplicy';
     }
 
 }
 
-export const getLatestNotification = () => "<strong>Urgent Requirement</strong> - complete by EOD";
+export const getLatestNotification = () => "<strong className={`text-white`}>Profile Update</strong> - !!important";

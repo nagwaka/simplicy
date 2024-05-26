@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Config/Component/Loading/Loading';
 import "./signup.css"
+import { toast } from 'react-toastify';
 
 export default function Signup({signup, userRole}) {
 
@@ -59,12 +60,15 @@ export default function Signup({signup, userRole}) {
           console.log(data)
           signup(data.savedUser)
           const id = data.savedUser.id;
+          toast.success("signin successful")
           navigate(`/api/users/${id}`)
           setLoading(false)
 
         })
         .catch((err) => {
           console.log(err)
+          toast.error("signup unsuccessful")
+
           setLoading(false)
 
         })

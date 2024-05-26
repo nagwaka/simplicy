@@ -17,6 +17,11 @@ import SellerDashboard from './Dashboards/SellerDashboardr';
 import IndexPage from './IndexPage/IndexPage';
 import Product from './ProductPage/Product';
 import Profile from './Profile/Profile';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 axios.defaults.baseURL = 'http://localhost:3000/api/'
 axios.defaults.withCredentials = true;//check the cookies not finished
@@ -31,17 +36,17 @@ export class App extends Component {
         displayDrawer : false,
         user: AuthUser,
         role: null,
-        // logOut: this.logOut,
+        logOut: this.logOut,
         listNotifications : [
           {
             id:1,
             type: "default",
-            value:"New course available"
+            value:"New Product available"
           },
           {
             id:2,
             type: "urgent",
-            value:"New resume availabletoday"
+            value:"New message from seller"
           },
           {
             id:3,
@@ -57,14 +62,17 @@ export class App extends Component {
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
     this.logIn = this.logIn.bind(this);
     this.setRole = this.setRole.bind(this);
-    // this.logOut = this.logOut.bind(this)
+    this.logOut = this.logOut.bind(this)
 
   }
-  // logOut() {
-  //   this.setState({
-  //     user: user
-  //   });
-  // }
+  logOut() {
+    this.setState({
+      user:{
+        user: null,
+        isLoggedIn: false,
+      }
+    });
+  }
 
   logIn = (user) => {
     this.setState({
@@ -124,7 +132,8 @@ export class App extends Component {
             listNotifications={this.state.listNotifications}
             handleHideDrawer= {this.handleHideDrawer}
             handleDisplayDrawer= {this.handleDisplayDrawer}
-            markNotificationAsRead={this.markNotificationAsRead}/>
+            markNotificationAsRead={this.markNotificationAsRead}
+            logout={this.logOut}/>
           <Header  handleDisplayDrawer= {this.handleDisplayDrawer} userRole={this.state.role}/>
           
           <Routes>
@@ -145,6 +154,18 @@ export class App extends Component {
             <Route path={"/index"} element={<IndexPage/>}/> }
           </Routes>
          </UserContext.Provider>
+         <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+         />
         
           </div>
         

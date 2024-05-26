@@ -13,13 +13,13 @@ export default function Home() {
         <section class="" data-section-theme="dark">
        
           <div className='container'>
-            <div class="text-black flex justify-between w-[25%]">
+            {/* <div class="text-black flex justify-between w-[25%]">
 
                 <button className='h-auto relative  buyer-1 buyer-seller w-[100%] p-[3rem]'>Buyer</button>
                 <button className='h-auto relative buyer-seller w-[100%] p-[3rem]'>Seller</button>
 
 
-             </div>
+             </div> */}
              <h1 className='text-black font-bold text-[1.6rem] lg:text-4xl text-center lg:px-20 px-0 lg:text-start mt-8 '>Harvesting Freshness, Connecting lives</h1>
           </div>
           

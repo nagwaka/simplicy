@@ -5,6 +5,7 @@ import "./login.css"
 import Header from '../Header/Header';
 import axios from 'axios';
 import Loading from '../Config/Component/Loading/Loading';
+import { toast } from 'react-toastify';
 // import {userContext } from '../Config/UserContext';
 
 export default function Login({login, setRole}) {
@@ -41,13 +42,14 @@ export default function Login({login, setRole}) {
         console.log(data)
         login(data.user)
         const id = data.user._id;
-        console.log(id)
+        toast.success("signin successful")
         navigate(`/api/user/${id}`)
         setLoading(false)
 
       })
       .catch((err) => {
         console.log(err)
+        toast.error("error signing")
         setLoading(false)
       })
   }

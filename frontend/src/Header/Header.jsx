@@ -17,9 +17,9 @@ const {AuthUser} =  useContext(UserContext)
     <header className={`${css(stylesHeader.headers)} `}>
       <div className="container flex items-center justify-between">
         <div className={`header-logo `} >
-           <a href="#" className=''>
+        <Link to={"/"} >
            <h1 className='header-text'>Simplicy</h1>
-          </a>
+          </Link>
         </div>
 
 
@@ -29,23 +29,25 @@ const {AuthUser} =  useContext(UserContext)
             <a className='font-bold dec' >Home</a>
           </Link>
       
-       {!AuthUser.user !== null ? (
-       
-        <Notification userName={AuthUser.user}  handleDisplayDrawer= {handleDisplayDrawer}/>
-              
+       {AuthUser.user === null ? (
+          <div className='flex  gap-4'>
+            <Link to={"/api/auth/signup"} >
+              <a className='font-bold dec' href='#'>Signup</a>
+            </Link>
+        
+            <Link to={"/api/auth/login"}>
+              <a className='font-bold'>Login</a>
+            </Link>
+          </div>
+  
        ): (
-       <div className='flex  gap-4'>
-          <Link to={"/api/auth/signup"} >
-            <a className='font-bold dec' href='#'>Signup</a>
-          </Link>
-    
-        <Link to={"/api/auth/login"}>
-          <a className='font-bold'>Login</a>
-        </Link>
-      </div>
+        <Notification userName={AuthUser.user}  handleDisplayDrawer= {handleDisplayDrawer}/>
+
+       
        )}
        </div>
       </div>
+              
 
     </header>
   )

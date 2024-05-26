@@ -28,10 +28,12 @@ const styles = StyleSheet.create({
       color: 'red'
     },
     li : {
+     
       "@media (max-width: 767px)" :{
         listStyle: "none",
         padding: "0 1rem",
-        borderBottom: "1px solid black"
+        borderBottom: "1px solid black",
+
   
     }
   }

@@ -40,3 +40,13 @@
    
     
   }
+
+  @media screen and (max-width: 767px) {
+    form{
+      width: 45rem;
+      
+      padding:  2rem;
+    
+      
+    }
+  }
