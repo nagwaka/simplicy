@@ -7,7 +7,7 @@ import Photos from '../Config/Component/Photos';
 import Cookies from 'js-cookie';
 
 
-export default function CreateListing({id, user}) {
+export default function CreateListing({userId, user}) {
   
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [role, setrole] = useState("");
@@ -22,10 +22,12 @@ export default function CreateListing({id, user}) {
  })
  const navigate = useNavigate()
  const {name, description, category,price, stock, images, photoLinks} = formData
-//  console.log(id)
 
+  const {id} = useParams()
+  console.log(id)
 
  const handleChange = (e) =>{
+
      setFormData((prev) =>({
        ...prev,
        [e.target.id] : e.target.value
@@ -42,20 +44,36 @@ export default function CreateListing({id, user}) {
       console.error('user not authorized');
       return;
     }
-   
-      axios.post(`http://localhost:3000/api/products/newProduct`, formData,  {
+    if (id) {
+      await axios.put(`http://localhost:3000/api/products/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
+      })
+         .then(res => {
+              console.log(res)
+              navigate(`/api/user/${userId}`)
         })
-          .then(({data}) => {
-            console.log(data)
-            navigate(`/api/user/${id}`)
-      
+        .catch((err) => {
+          console.log(err)
+        })
+
+      } else {
+        await axios.post(`http://localhost:3000/api/products/newProduct`, formData,  {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
           })
-          .catch((err) => {
-            console.log(err)
-          })
+            .then(({data}) => {
+              console.log(data)
+              navigate(`/api/user/${id}`)
+        
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+
+      }
     
 }
   
@@ -69,16 +87,42 @@ useEffect (() => {
       setEnableSubmit(false);
     }
   }
+  if (id){
+    console.log(id)
+ 
+  axios.get(`http://localhost:3000/api/products/${id}`).then(response => {
+    const{data} = response
+    
+    console.log(response)
+    setFormData((prev) => ({
+      ...prev,
+      name: data.name,
+      description: data.description,
+      images: [...prev.images, data.images],
+      // photoLinks: [...prev.photoLinks, data.photoLinks],
+      category: data.category,
+      price: data.price,
+      stock:data.stock,
+    }))
+  })
+  .catch(error => {
+    console.log(error.message || 'An error occurred');
+  })
+  // .finally(() => {
+  //   setIsLoading(false);
+  // });
+}
+
  
 
-}, [name, price, enableSubmit]);
+}, [name, price, enableSubmit, id]);
 
 
 async function addPhotoLink(e) {
   e.preventDefault();
 
   try {
-    const response = await axios.post('http://localhost:5000/api/photos/upload-by-link', {
+    const response = await axios.post('http://localhost:3000/api/photos/upload-by-link', {
       link: photoLinks,
     });
 
@@ -145,7 +189,7 @@ function selectAsMainPhoto(e, fileName){
   // Update the photos property in the state
   setFormData((prev) => ({
     ...prev,
-    photos: newAddedPhoto,
+    images: newAddedPhoto,
 }));
 }
   return (
@@ -153,7 +197,7 @@ function selectAsMainPhoto(e, fileName){
         <div className="container">
           <div className='form m-auto pt-9 h-auto'>
             <form className='m-auto' onSubmit={submit}>  
-            <h1 className="mb-6 text-center">Create New Product</h1>
+            <h1 className="mb-6 text-center">{id ? "Update Product" : "Create New Product"}</h1>
                         <div className="field-container ">
                         
                           <div className='column input'>
@@ -269,7 +313,7 @@ function selectAsMainPhoto(e, fileName){
 
                 </div>
 
-                <button className='button w-[100%] mt-4'>Add Product </button>
+                <button className='button w-[100%] mt-4'>{id && id ? "Update Product" : "Add Product"} </button>
 
             </form>
         </div>

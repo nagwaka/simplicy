@@ -15,6 +15,7 @@ import axios from 'axios';
 import { AuthUser, UserContext } from './Config/UserContext';
 import SellerDashboard from './Dashboards/SellerDashboardr';
 import IndexPage from './IndexPage/IndexPage';
+import Product from './ProductPage/Product';
 
 axios.defaults.baseURL = 'http://localhost:3000/api/'
 axios.defaults.withCredentials = true;//check the cookies not finished
@@ -28,6 +29,7 @@ export class App extends Component {
       this.state = {
         displayDrawer : false,
         user: AuthUser,
+        role: null,
         // logOut: this.logOut,
         listNotifications : [
           {
@@ -52,7 +54,8 @@ export class App extends Component {
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-    this.login = this.logIn.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.setRole = this.setRole.bind(this);
     // this.logOut = this.logOut.bind(this)
 
   }
@@ -71,6 +74,13 @@ export class App extends Component {
     });
     console.log(user)
   };
+
+  setRole = (role) => {
+    this.setState({
+     role: role
+    });
+  };
+
   markNotificationAsRead = (id) => {
     this.setState(prevState => ({
       listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
@@ -114,17 +124,21 @@ export class App extends Component {
             handleHideDrawer= {this.handleHideDrawer}
             handleDisplayDrawer= {this.handleDisplayDrawer}
             markNotificationAsRead={this.markNotificationAsRead}/>
-          <Header  handleDisplayDrawer= {this.handleDisplayDrawer} role="buyer"/>
+          <Header  handleDisplayDrawer= {this.handleDisplayDrawer} userRole={this.state.role}/>
           
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path={"/api/auth/login"} element={<Login login={this.logIn}/>}/>
-            <Route path={"/api/auth/signup"} element={<Signup signup={this.logIn}/>}/>
+            <Route path={"/api/auth/login"} element={<Login login={this.logIn} setRole={this.setRole} />}/>
+            <Route path={"/api/auth/signup"} element={<Signup signup={this.logIn} userRole={this.state.role}/>}/>
             <Route path={"/api/user/:id"} element={<Dashboard />}/>
-            <Route path={"/index"} element={<IndexPage/>}/>
-            {/* <Route path={"/api/user/:id"} element={<SellerDashboard />}/> */}
+            {this.state.user.isLoggedIn  === false ?
+            <Route path={"/index"} element={<IndexPage/>}/>: ""}
+            
             {this.state.user.isLoggedIn ?
-            <Route path={"/api/newProduct"} element={<CreateListing id={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
+            <Route path={"/api/newProduct"} element={<CreateListing userId={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
+             {this.state.user.isLoggedIn ?
+            <Route path={"/api/updateProduct/:id"} element={<CreateListing userId={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
+            <Route path={"/api/product/:id"} element={<Product/>}/>
           </Routes>
          </UserContext.Provider>
         

@@ -1,0 +1,34 @@
+input[type="radio"]{
+   /* Change background color */
+    width: 20px;
+    height: 60px;
+    /* Change border color */
+  }
+input[type="radio"]:checked, .active{
+    border: 2px solid lightgreen;
+    background-color: lightgreen;
+    width: 30px;
+    height: 60px;
+  }
+
+
+
+      
+@media screen and (max-width: 767px) {
+    input[type="radio"]{
+        /* Change background color */
+         width: 15px;
+         height: 30px;
+         /* Change border color */
+       }
+   
+     input[type="radio"]:checked, .active{
+         border: 2px solid lightgreen;
+         background-color: lightgreen;
+         width: 15px;
+         height: 40px;
+       }
+     
+     
+    
+   }

@@ -32,8 +32,8 @@ export default function Notification({handleDisplayDrawer, userName}) {
          className={css(styles.menuItem, styles.icon)}  />
 
        
-        <div className="flex items-center name-logo " >
-            <h1 className='text-6xl pr-4'>{userName && userName.fullName[0]}</h1>
+        <div className="flex items-center name-logo  text-white" >
+            <h1 className='text-2xl pr-4'>{userName && userName.fullName}</h1>
             <LuUserCircle  className={`ml-4'icon-logo'`} size="30"  />       
         </div>  
     </div>

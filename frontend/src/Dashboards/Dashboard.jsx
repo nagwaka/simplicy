@@ -2,16 +2,19 @@ import React, { useContext, useEffect, useState } from 'react'
 // import { userContext } from '../Config/UserContext'
 import BuyerDashboard from './BuyerDashboard'
 import SellerDashboard from './SellerDashboardr'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from '../Config/UserContext'
 import ProductPage from '../ProductPage/ProductPage'
+import IndexPage from '../IndexPage/IndexPage'
 
 export default function Dashboard() {
 
   const [ role, setRole ] = useState("")
   const {AuthUser} = useContext(UserContext)
   const {id} = useParams()
+
+  const navigate = useNavigate()
   console.log(id)
 
    useEffect(() => {
@@ -28,7 +31,7 @@ export default function Dashboard() {
     } else if (page === "seller") {
       return <SellerDashboard role={role}/>
     } else {
-      return <ProductPage/>
+      navigate("/index")
     }
 
   }

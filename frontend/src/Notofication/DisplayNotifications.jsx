@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function DisplayNotifications() {
   return (
-    <div>
+    <div className='hidden'>
          <div className={css(styles.displayNav)}>
             <p >Your Notifications</p>
         </div>

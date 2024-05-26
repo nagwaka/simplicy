@@ -19,11 +19,10 @@ export default function SellerDashboard({role}) {
     <div className=' flex column gap-[2rem] justify-center'>
       
       <h1 className='text-white text-center mt-4'>Seller's Page</h1>
-            {/* {isLoading ? 
-            <Loading/> : <ProductPage role={role}/>} */}
-            <Link to={`/api/newProduct`}>
             
-            <button className='button'>Add Product</button>
+            <Link to={`/api/newProduct`} className='mx-auto'>
+            
+            <button className='button '>Add Product</button>
             </Link>
 
             <ProductPage role={role}/>

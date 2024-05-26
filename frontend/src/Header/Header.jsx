@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Notification from '../Notofication/Notification';
 import { UserContext } from '../Config/UserContext';
 
-export default function Header({login, signup, role,  handleDisplayDrawer }) {
+export default function Header({handleDisplayDrawer }) {
 
 const {AuthUser} =  useContext(UserContext)
 
@@ -23,32 +23,28 @@ const {AuthUser} =  useContext(UserContext)
         </div>
 
 
-       <div className='text-white'>
+       <div className='text-white flex gap-4 items-center'>
+
+       <Link to={"/index"} >
+            <a className='font-bold dec' >Home</a>
+          </Link>
+      
+       {!AuthUser.user !== null ? (
        
-       {login ? (
-          signup ? (
-           
-              <Link>
-                <a className='font-bold dec' href='#'>Signup</a>
-              </Link>
-          ) : 
-          (
-            <Link>
-              <a className='font-bold'>Login</a>
-            </Link>
-          ) 
-        
-        ) : 
-        null
-       }
-
+        <Notification userName={AuthUser.user}  handleDisplayDrawer= {handleDisplayDrawer}/>
+              
+       ): (
+       <div className='flex  gap-4'>
+          <Link to={"/api/auth/signup"} >
+            <a className='font-bold dec' href='#'>Signup</a>
+          </Link>
+    
+        <Link to={"/api/auth/login"}>
+          <a className='font-bold'>Login</a>
+        </Link>
+      </div>
+       )}
        </div>
-
-
-       {AuthUser != null ? (
-        <Notification userName={AuthUser.user.name}  handleDisplayDrawer= {handleDisplayDrawer}/>
-       ): ""}
-
       </div>
 
     </header>
