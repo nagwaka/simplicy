@@ -6,6 +6,10 @@ import React, { useEffect, useState } from 'react'
 export default function Contact({sellerId}) {
     const [seller, setSeller] = useState(null);
     const [message, setMessage] = useState("");
+
+    function onchange (e) {
+        setMessage(e.target.value)
+    }
     
     useEffect(() => {
         async function getSeller(){
@@ -28,11 +32,12 @@ export default function Contact({sellerId}) {
   return (
      <>
      { seller !== null && (
-            <div className='flex flex-col text-sm lg:text-lg mt-5 space-y-3'>
-            <p>
+            <div className='flex flex-col text-2xl lg:text-lg mt-5 space-y-3'>
+            <h2 className='text-3xl'>
               Contact <span className='font-bold'>{seller.fullName} </span> for the readily fruits
-            </p>
+            </h2>
             <textarea
+            className='p-4 text-black text-2xl'
             onChange={onchange}
              placeholder='Message'
              />

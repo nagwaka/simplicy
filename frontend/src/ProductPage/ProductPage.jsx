@@ -4,6 +4,9 @@ import axios from 'axios';
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import { UserContext } from '../Config/UserContext';
+import Cookies from 'js-cookie';
+import { MdOutlineShoppingBag } from "react-icons/md";
+
 // import { BsCloudUpload } from 'react-icons/bs'
 // import axios from 'axios'
 // import Perks from '../Component/Perks'
@@ -28,13 +31,24 @@ useEffect(()=> {
 }, [])
 
 
-function handleDelete(id) {
+async function handleDelete(e, id) {
+  e.preventDefault()
+  const token = Cookies.get("token")
+    console.log(token)
+
+    if (!token) {
+      console.error('user not authorized');
+      return;
+    }
   // Ask for confirmation before deleting
   const confirmDelete = alert("Are you sure you want to delete this product?");
-  
+  console.log(id)
   if (confirmDelete && id) {
-    axios.delete(`http://localhost:3000/api/products/${id}`)
-      .then(response => {
+    await axios.delete(`http://localhost:3000/api/products/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
         console.log( response,"Product deleted successfully");
         alert("Product deleted successfully");
         console.log(products)
@@ -82,7 +96,7 @@ function handleDelete(id) {
                         </Link>
                         
                         {AuthUser.user !== " "?
-                        <p className='text-black' onClick={() => handleDelete(product._id)}><MdOutlineDelete/></p> : ""}
+                        <p className='text-black' onClick={(e) => handleDelete(e,product._id)}><MdOutlineDelete/></p> : ""}
 
                       </div>
                     </div>

@@ -16,6 +16,7 @@ import { AuthUser, UserContext } from './Config/UserContext';
 import SellerDashboard from './Dashboards/SellerDashboardr';
 import IndexPage from './IndexPage/IndexPage';
 import Product from './ProductPage/Product';
+import Profile from './Profile/Profile';
 
 axios.defaults.baseURL = 'http://localhost:3000/api/'
 axios.defaults.withCredentials = true;//check the cookies not finished
@@ -131,14 +132,17 @@ export class App extends Component {
             <Route path={"/api/auth/login"} element={<Login login={this.logIn} setRole={this.setRole} />}/>
             <Route path={"/api/auth/signup"} element={<Signup signup={this.logIn} userRole={this.state.role}/>}/>
             <Route path={"/api/user/:id"} element={<Dashboard />}/>
-            {this.state.user.isLoggedIn  === false ?
-            <Route path={"/index"} element={<IndexPage/>}/>: ""}
+           
+            <Route path={"/index"} element={<IndexPage/>}/>
             
             {this.state.user.isLoggedIn ?
             <Route path={"/api/newProduct"} element={<CreateListing userId={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
              {this.state.user.isLoggedIn ?
             <Route path={"/api/updateProduct/:id"} element={<CreateListing userId={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
             <Route path={"/api/product/:id"} element={<Product/>}/>
+            {this.state.user.isLoggedIn === true ?
+            <Route path={"/api/profile"} element={<Profile id={this.state.user.user._id} login={this.logIn}/> }/> : 
+            <Route path={"/index"} element={<IndexPage/>}/> }
           </Routes>
          </UserContext.Provider>
         

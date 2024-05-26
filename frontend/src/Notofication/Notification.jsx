@@ -3,6 +3,7 @@ import { AiFillNotification } from "react-icons/ai";
 import { LuUserCircle  } from "react-icons/lu";
 import "./Notification.css"
 import { StyleSheet, css } from 'aphrodite';
+import { Link } from 'react-router-dom';
 const opacityAnimation = {
     "0% ": {
       opacity: 0.5,
@@ -34,7 +35,9 @@ export default function Notification({handleDisplayDrawer, userName}) {
        
         <div className="flex items-center name-logo  text-white" >
             <h1 className='text-2xl pr-4'>{userName && userName.fullName}</h1>
-            <LuUserCircle  className={`ml-4'icon-logo'`} size="30"  />       
+            <Link to={'/api/profile'}>
+             <LuUserCircle  className={`ml-4'icon-logo'`} size="30"  />    
+            </Link>   
         </div>  
     </div>
    

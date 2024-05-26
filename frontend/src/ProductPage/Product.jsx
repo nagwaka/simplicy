@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { resolvePath, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
@@ -8,6 +8,8 @@ import { FaShare, FaMapMarkerAlt, FaBed } from 'react-icons/fa';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import axios from 'axios';
 import Contact from '../Config/Component/Contact';
+import { MdOutlineShoppingBag } from "react-icons/md";
+import { UserContext } from '../Config/UserContext';
 
 
 export default function Product() {
@@ -17,7 +19,7 @@ export default function Product() {
   const [loading, setLoading] = useState(false);
   const [shareLinkCopy, setShareLinkCopy] = useState(false);
   const [contactLandLord, setContactLandLord] = useState(false);
-
+  const {AuthUser} = useContext(UserContext)
   SwiperCore.use([Autoplay, Navigation, Pagination]);
 
   const [ products, setProducts ] = useState([])
@@ -56,16 +58,16 @@ export default function Product() {
             {products.images && products.images.map((url, index) => (
               <SwiperSlide key={index}>
                 <div
-                  className='relative w-full overflow-hidden  h-[300px]' 
-                  style={{ background: `url(${products.images[index]}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}>
-                {/* <img  className='rounded-2xl w-full object-cover' src={"http://localhost:3000/uploads/" + products.images[url]} alt={index} /> */}
+                  className=' w-full overflow-hidden bg-red-500 z-10000  h-[300px]' 
+                  style={{ background: `url(${url}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}>
+                <img  className='rounded-2xl w-full h-[100%] object-cover' src={`http://localhost:3000/uploads/${url}`} alt={index} />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         )}
 
-        <div className="fixed top-[13%] right-[3%] z-10 bg-white cursor-pointer border-2 border-grey-400 rounded-full w-12 h-12 flex justify-center items-center " onClick={() => {
+        <div className="fixed top-[13%] right-[12%] lg:right-[18%] z-10 bg-white cursor-pointer border-2 border-grey-400 rounded-full w-12 h-12 flex justify-center items-center " onClick={() => {
           navigator.clipboard.writeText(window.location.href);
           setShareLinkCopy(true);
           setTimeout(() => {
@@ -88,10 +90,7 @@ export default function Product() {
                
                 {products.name}
               </p>
-              <p className='flex items-center mt-6 mb-3 font-semibold'>
-                <FaMapMarkerAlt className='text-green-700 mr-1' />
-                {products.address}
-              </p>
+              
               <div className='flex justify-start items-center space-x-4 w-[75%]'>
                 <p className='bg-red-800 text-2xl lg:text-base w-full md:text-base mx-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md '>
                   {products.category }
@@ -104,10 +103,19 @@ export default function Product() {
               </p>
               <ul className='flex items-center sm:space-x-10 md:space-x-3 text-sm font-semibold'>
                 <li className='font-semibold text-2xl flex items-center whitespace-nowrap '>
-                  <FaBed className='text-lg mr-1' />
+                  <MdOutlineShoppingBag size={"20px"} className='text-lg mr-1' />
                   {+products.stock < 0 ? `0 Stocks` : `${products.stock} Stock`}
 
                 </li>
+                {
+                  AuthUser.user !== null ? (
+                        <li className='font-semibold text-2xl flex items-center whitespace-nowrap '>
+                      <FaMapMarkerAlt size={"20px"} className='text-lg mr-1' />
+                      {  +products.stock < 0 ? "" : AuthUser.user.region }
+
+                    </li>
+                  ): ""
+                }
                 
               </ul>
 
@@ -130,7 +138,7 @@ export default function Product() {
             </div>
 
             <div className='w-full h-[200px] lg:h-[400px] z-10 overflow-x-hidden '>
-            <MapContainer center={position} zoom={13} scrollWheelZoom={false}
+            {/* <MapContainer center={position} zoom={13} scrollWheelZoom={false}
             style={{height: "100%", width: "100%"}}>
                 <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -141,7 +149,7 @@ export default function Product() {
                     A pretty CSS3 popup. <br /> Easily customizable.
                 </Popup>
                 </Marker>
-            </MapContainer>
+            </MapContainer> */}
            
             </div>
           </div>
