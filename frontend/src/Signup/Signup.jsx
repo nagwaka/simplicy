@@ -59,9 +59,9 @@ export default function Signup({signup, userRole}) {
         .then(({data}) => {
           console.log(data)
           signup(data.savedUser)
-          const id = data.savedUser.id;
+          const id = data.savedUser._id;
           toast.success("signin successful")
-          navigate(`/api/users/${id}`)
+          navigate(`/api/user/${id}`)
           setLoading(false)
 
         })
@@ -217,7 +217,7 @@ export default function Signup({signup, userRole}) {
 
                           </div>
                           
-                          <input onClick={submit} disabled={!enableSubmit} className='button' type="submit" value="login" />
+                          <input onClick={submit} disabled={!enableSubmit} className='button' type="submit" value="Register" />
                      
                       </div>
                 </form>

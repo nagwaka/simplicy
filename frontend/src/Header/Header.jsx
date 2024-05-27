@@ -10,6 +10,7 @@ import { UserContext } from '../Config/UserContext';
 export default function Header({handleDisplayDrawer }) {
 
 const {AuthUser} =  useContext(UserContext)
+console.log(AuthUser)
 
 
 
@@ -29,7 +30,7 @@ const {AuthUser} =  useContext(UserContext)
             <a className='font-bold dec' >Home</a>
           </Link>
       
-       {AuthUser.user === null ? (
+       { AuthUser.isLoggedIn === false ? (
           <div className='flex  gap-4'>
             <Link to={"/api/auth/signup"} >
               <a className='font-bold dec' href='#'>Signup</a>

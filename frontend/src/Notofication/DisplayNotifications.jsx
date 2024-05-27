@@ -27,7 +27,8 @@ export default function DisplayNotifications({
   const handleLogout = () => {
     logout();
     Cookies.remove('token');
-    navigate("/api/auth/login")
+    navigate("/api/auth/login");
+    handleHideDrawer();
   };
   
   return (

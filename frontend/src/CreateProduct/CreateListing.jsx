@@ -71,7 +71,7 @@ export default function CreateListing({userId, user}) {
             .then(({data}) => {
               console.log(data)
               toast.success("product successful updated")
-              navigate(`/api/user/${id}`)
+              navigate(`/api/user/${userId}`)
         
             })
             .catch((err) => {
