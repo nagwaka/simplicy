@@ -29,15 +29,17 @@ const signup = async (req, res) => {
         const payload = {
             userId : savedUser._id
         }
-        const secretKey = process.env.SECRET_KEY
+        // const secretKey = process.env.SECRET_KEY;
+        const secretKey = "underdog"
         const options = {
             expiresIn : '3h'
         }
         const token = jwt.sign(payload, secretKey, options)
-        const userRole = savedUser.role
-        res.status(201).json({
-            token,
-            userRole})
+        // const userRole = savedUser.role
+        // res.status(201).json({
+        //     token,
+        //     savedUser})
+        res.cookie('token', token).json({savedUser})
     }catch (error) {
         res.status(500).json( {message : 'Internal Server Error'} )
         console.log(error)
@@ -58,17 +60,19 @@ const login = async (req, res) => {
         const payload = {
             userId : user._id
         }
-        const secretKey = process.env.SECRET_KEY
+        // const secretKey = process.env.SECRET_KEY
+        const secretKey = "underdog"
         const options = {
             expiresIn : '3h'
         }
 
         const token = jwt.sign(payload, secretKey, options)
-        const userRole = user.role
-        res.status(200).json({
-            token,
-            userRole
-        })
+        // const userRole = user.role
+        // res.status(200).json({
+        //     token,
+        //     user
+        // })
+        res.cookie('token', token).json({user})
     }catch (err){
         console.log(err)
         res.status(500).json({message : 'Internal Server Error'})

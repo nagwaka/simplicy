@@ -27,6 +27,8 @@ const addProduct = async (req, res) => {
   try {
     if (req.user.role !== "seller") {
       res.status(403).json({ message: "Unauthorised Access" });
+      console.log(req.user)
+      console.log(req)
     }
 
     const { name, description, category, stock, price, images } = req.body;

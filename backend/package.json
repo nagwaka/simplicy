@@ -1,27 +1,24 @@
 {
-  "name": "backend",
+ 
+  "name": "simplicy",
   "version": "1.0.0",
-  "description": "Backend for simplicy",
+  "description": "api for alx-final-project_specialization SIMPLICY",
   "main": "app.js",
   "scripts": {
+    "start": "node src/app.js",
     "test": "nodemon app"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nagwaka/simplicy.git"
+    "url": "git+https://github.com/Code-Gale/simplicy_backend.git"
   },
   "keywords": [
-    "backend",
-    "marketplace",
-    "api",
-    "nodejs",
-    "expressjs",
-    "mongodb"
+    "api"
   ],
   "author": "Code Singer",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nagwaka/simplicy/issues"
+    "url": "https://github.com/Code-Gale/simplicy_backend/issues"
   },
   "homepage": "https://github.com/nagwaka/simplicy#readme",
   "dependencies": {

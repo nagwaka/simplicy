@@ -14,7 +14,11 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // Verify the token
+<<<<<<< HEAD
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
+=======
+    const decoded = jwt.verify(token, "underdog");
+>>>>>>> kolawole
     
     // Find the user based on the decoded token
     const user = await User.findById(decoded.userId);

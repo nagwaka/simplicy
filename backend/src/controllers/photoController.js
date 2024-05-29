@@ -1,32 +1,33 @@
 const multer = require("multer");
-const fs = require('fs');
-const imgDownloader = require("image-downloader");
-const path = require("path");
+const fs =  require('fs')
+// const imgDownloader = require("image-downlo")
+const path = require("path")
 
-// Upload by link
-const uploadByLink = async (req, res) => {
-    try {
-        const { link } = req.body; // gets this from the axios input field
-        const newName = 'photo' + Date.now() + '.jpeg';
-        const dest = path.join(__dirname, "uploads", newName);
-
-        const options = {
-            url: link,
-            dest: dest
-        };
-
-        const { filename } = await imgDownloader.image(options);
-        res.json(filename);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to download image' });
+// app.post('/upload-by-link', 
+const uploadByLink = async (req, res) =>{
+    const {link} = req.body// gets this from the axios input field 
+    const newName = 'photo' + Date.now() + '.jpeg'
+    const options = {
+        url: link,
+        dest: __dirname + "/uploads/" + newName
     }
+   await imgDownloader.image(options)
+   .then(({filename}) => {
+    res.json(filename);
+    // console.log(filename)
+
+   }
+   
+    )
+    .catch((err) => console.error(err))
+
 };
 
-// Middleware for file uploads from device
+
+//from device
 const photoMiddleware = multer({ dest: 'uploads/' });
 
-const uploadMultiple = (req, res) => {
+const uploadMultiple = (req, res, next) => {
     photoMiddleware.array('photos', 100)(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
@@ -35,22 +36,24 @@ const uploadMultiple = (req, res) => {
             // An unknown error occurred when uploading.
             return res.status(500).json({ error: 'An unknown error occurred.' });
         }
-
         // Everything went fine.
-        const uploadedFiles = [];
-        req.files.forEach(file => {
-            const { path: tempPath, originalname } = file;
-            const ext = path.extname(originalname);
-            const newPath = tempPath + ext;
-            fs.renameSync(tempPath, newPath);
-            uploadedFiles.push(newPath.replace('uploads/', ''));
-        });
-
-        res.json(uploadedFiles);
+        const uploadsFiles = [];
+        for (let i = 0; i < req.files.length; i++) {
+            const { path, originalname } = req.files[i];
+            const parts = originalname.split('.');
+            const exten = parts[parts.length - 1];
+            const newPath = path + '.' + exten;
+            fs.renameSync(path, newPath);
+            uploadsFiles.push(newPath.replace('uploads/', ''));
+        }
+        res.json(uploadsFiles);
     });
 };
+
+
 
 module.exports = {
     uploadByLink,
     uploadMultiple
-};
+    
+}

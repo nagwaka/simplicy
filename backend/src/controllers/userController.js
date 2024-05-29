@@ -11,6 +11,22 @@ const getAll = async (req, res) => {
         console.log(err)
     }
 }
+
+const getUserProfile = async (req, res) => { // u can also use await and sync instead of then
+    const {token} = req.cookies;
+    if(token){
+        jwt.verify(token, jwtSecret,{}, async( err, user) =>{
+            if(err) throw err;
+            const {name, email, _id} = await User.findById(user.id)
+            res.json({name, email, _id})// alternatively to pass all this to the cookies so u can get the user that is logged in
+        })
+
+    } else{
+        res.json(null)
+
+    }
+    
+}
 //get a specific User
 const getById = async (req, res) => {
     try{
@@ -58,5 +74,6 @@ module.exports = {
     getAll,
     getById,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserProfile
 }
