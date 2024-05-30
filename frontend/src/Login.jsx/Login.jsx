@@ -49,6 +49,7 @@ export default function Login({login, setRole}) {
       })
       .catch((err) => {
         console.log(err)
+        // const message = err.response.message
         toast.error("error signing")
         setLoading(false)
       })

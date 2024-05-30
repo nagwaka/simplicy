@@ -19,11 +19,13 @@ export default function BuyerDashboard({role}) {
     console.log(role)
 
   return (
-    <div className=''>
+    <div className='p-10'>
       
       <h1 className='text-white text-center mt-4'>Buyer's Page</h1>
-            {isLoading  ? 
-            <Loading/> : <ProductPage role={role}/>}
+            {/* {isLoading  ? 
+            <Loading/> : <ProductPage role={role}/>} */}
+            <ProductPage role={role}/>
+
         
     </div>
   )

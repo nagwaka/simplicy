@@ -4,7 +4,7 @@ import Loading from '../Config/Component/Loading/Loading'
 import ProductPage from '../ProductPage/ProductPage'
 
 
-export default function SellerDashboard({role}) {
+export default function SellerDashboard({sellerId, role}) {
 
   const [ isLoading, setIsLoading ] = useState(true)//kola
 
@@ -12,7 +12,8 @@ export default function SellerDashboard({role}) {
 
    
 
-     
+  console.log(sellerId)
+
 
 
   return (
@@ -24,8 +25,7 @@ export default function SellerDashboard({role}) {
             
             <button className='button '>Add Product</button>
             </Link>
-
-            <ProductPage role={role}/>
+            <ProductPage seller={sellerId} role={role}/>
         
     </div>
   )

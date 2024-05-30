@@ -13,25 +13,39 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 // import Photos from '../Component/Photos'
 
 
-export default function ProductPage({role}) {
+export default function ProductPage({seller, role}) {
   
   const [ products, setProducts ] = useState([])
 
   const {AuthUser} = useContext(UserContext)
+  const id = seller
+  console.log(id,role, 'dd')
 
 useEffect(()=> {
- 
-    axios.get("http://localhost:3000/api/products/")
+
+  if (role === "seller") {
+    axios.get(`http://localhost:3000/api/products/${id}/products`)
     .then((response) => {
         setProducts(response.data);
+        console.log(response)
     }) .catch ((error) => {
         console.log(error)
     })
+
+  } else {
+    axios.get(`http://localhost:3000/api/products/`)
+    .then((response) => {
+        setProducts(response.data);
+        console.log(response)
+    }) .catch ((error) => {
+        console.log(error)
+    })
+  }
  
-}, [])
+}, [id])
 
 
-async function handleDelete(e, id) {
+async function handleDelete(e, product_id) {
   e.preventDefault()
   const token = Cookies.get("token")
     console.log(token)
@@ -42,9 +56,9 @@ async function handleDelete(e, id) {
     }
   // Ask for confirmation before deleting
   const confirmDelete = alert("Are you sure you want to delete this product?");
-  console.log(id)
-  if (confirmDelete && id) {
-    await axios.delete(`http://localhost:3000/api/products/${id}`, {
+  console.log(product_id)
+  if (confirmDelete && product_id) {
+    await axios.delete(`http://localhost:3000/api/products/${product_id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -66,9 +80,9 @@ async function handleDelete(e, id) {
   
   return (
   
-        <div className='mt-10 lg:flex gap-6'>
+        <div className='mt-10 lg:flex gap-6  h-[100%] flex-wrap'>
           {products.length > 0 && products.map(product => (
-            <div className='flex  cursor-pointer gap-4 mb-8 lg:mb-0 text-black bg-gray-100 p-4 rounded-2xl'>
+            <div className='flex flex-wrap lg:max-w-xs  max-w-md cursor-pointer gap-4 mb-8 lg:mb-0 text-black bg-gray-100 p-4 rounded-2xl'>
               <Link to={'/api/product/' + product._id} className='w-[100px] h-[auto] lg:w-[200px] lg:h-[auto]  grow shrink-0'>
                 {product.images.length && ( 
                   <img className='rounded-2xl w-[100%]  lg:w-[100%] '  src={'http://localhost:3000/uploads/' + product.images[0]} alt=""/> 
@@ -90,13 +104,13 @@ async function handleDelete(e, id) {
                       <h2 className='text-2xl font-bold'>{product.createdAt}</h2>
                       
                       <div className='flex space-x-4 items-center gap-4'>
-                        {AuthUser.user.fullName}
+                      <p  className='text-xl'>Seller: <span className='text-xm mt-2 font-bold'>{AuthUser.user.fullName}</span></p>
                         <Link to={'/api/updateProduct/' + product._id}>
-                        {!AuthUser.user !== null ? <p className='text-black'><FiEdit2/></p> : ""}
+                        {role === "seller" ? <p className='text-black'><FiEdit2/></p>: "" }
+
                         </Link>
-                        
-                        {AuthUser.user !== " "?
-                        <p className='text-black' onClick={(e) => handleDelete(e,product._id)}><MdOutlineDelete/></p> : ""}
+                        {role === "seller" ? 
+                        <p className='text-black' onClick={(e) => handleDelete(e,product._id)}><MdOutlineDelete/></p>: ""}
 
                       </div>
                     </div>

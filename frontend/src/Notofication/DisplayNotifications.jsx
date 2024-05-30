@@ -2,7 +2,7 @@ import { StyleSheet, css } from 'aphrodite'
 import React from 'react'
 import NotificationItem from './NotificationItem'
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 
@@ -61,6 +61,11 @@ export default function DisplayNotifications({
           </ul>
 
           <div className="mx-auto">
+            <Link to={'/api/user/id'}>
+            <p>Dashboard</p>
+            </Link>
+           
+
           <button onClick={handleLogout} className='button-logout mt-6 mx-auto text-black'>logout</button>
           </div>
 
@@ -80,6 +85,7 @@ const styles = StyleSheet.create({
     zIndex:100000,
     padding: '2rem',
     color:"black",
+    // backgroundColor:"red",
     // background:"red",
     // fontSize: 'var(--font-x-small)',
     "@media (max-width: 767px)" :{

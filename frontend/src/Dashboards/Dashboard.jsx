@@ -15,7 +15,6 @@ export default function Dashboard() {
   const {id} = useParams()
 
   const navigate = useNavigate()
-  console.log(id)
 
    useEffect(() => {
 
@@ -26,10 +25,11 @@ export default function Dashboard() {
     }) 
 
   const PageReturn = (page) => {
+    console.log(id)
     if (page === "buyer") {
       return <BuyerDashboard role={role}/>
     } else if (page === "seller") {
-      return <SellerDashboard role={role}/>
+      return <SellerDashboard sellerId={id} role={role}/>
     } else {
       navigate("/index")
     }
@@ -41,7 +41,7 @@ export default function Dashboard() {
   return (
    
       <section className='section section-bg h-[100%]'>
-        <div className="container ">
+        <div className="container   ">
           <div className=" flex justify-center ">
            {id ? (
                  PageReturn(role)

@@ -140,9 +140,9 @@ export class App extends Component {
             <Route path='/' element={<Home/>}/>
             <Route path={"/api/auth/login"} element={<Login login={this.logIn} setRole={this.setRole} />}/>
             <Route path={"/api/auth/signup"} element={<Signup signup={this.logIn} userRole={this.state.role}/>}/>
-            <Route path={"/api/user/:id"} element={<Dashboard />}/>
+            <Route path={"/api/user/:id"} element={<Dashboard  />}/>
            
-            <Route path={"/index"} element={<IndexPage/>}/>
+            <Route path={"/index"} element={<IndexPage role={this.state.role}/>}/>
             
             {this.state.user.isLoggedIn ?
             <Route path={"/api/newProduct"} element={<CreateListing userId={this.state.user.user._id} user={AuthUser.user} />}/>: ""}
