@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { resolvePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css/bundle';
-import { FaShare, FaMapMarkerAlt, FaBed } from 'react-icons/fa';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import SwiperCore, { Autoplay, Navigation, Pagination, EffectFade } from 'swiper';
+// import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import { FaShare, FaMapMarkerAlt } from 'react-icons/fa';
+// import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import axios from 'axios';
 import Contact from '../Config/Component/Contact';
 import { MdOutlineShoppingBag } from "react-icons/md";
@@ -15,7 +15,6 @@ import { UserContext } from '../Config/UserContext';
 export default function Product() {
   const {id} = useParams();
   
-  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [shareLinkCopy, setShareLinkCopy] = useState(false);
   const [contactLandLord, setContactLandLord] = useState(false);
@@ -46,24 +45,26 @@ export default function Product() {
     // <></>
     <section className='section section-bg text-white'>
       <div className='container'>
-        {products && products && (
+        {products && (
           <Swiper
             slidesPerView={1}
             navigation
             pagination={{ type: 'progressbar' }}
             effect="fade"
             modules={[EffectFade]}
-            // autoplay={{ delay: 3000 }}
+            autoplay={{ delay: 3000 }}
           >
+          {/* <div> */}
             {products.images && products.images.map((url, index) => (
               <SwiperSlide key={index}>
                 <div
                   className=' w-full overflow-hidden bg-red-500 z-10000  h-[300px]' 
-                  style={{ background: `url(${url}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}>
+                  style={{ background: `url{}}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}>
                 <img  className='rounded-2xl w-full h-[100%] object-cover' src={`http://localhost:3000/uploads/${url}`} alt={index} />
                 </div>
               </SwiperSlide>
             ))}
+            {/* </div> */}
           </Swiper>
         )}
 

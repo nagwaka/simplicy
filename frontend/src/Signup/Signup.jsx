@@ -15,13 +15,14 @@ export default function Signup({signup, userRole}) {
         email: "",
         role: userRole,
         region:"",
+        phoneNo:"",
         password: "",
         
         
    })
  
    const navigate = useNavigate();
-   const {email, password, fullName, role, region} = formData
+   const {email, password, fullName, role,  region, phoneNo} = formData
 
    const handleChange = (e) => {
     let selectedRole = ''; // Declare selectedRole outside of if blocks
@@ -186,6 +187,27 @@ export default function Signup({signup, userRole}) {
                                 required
                                 autoComplete='off'
                                 placeholder='Lagos'
+                                onChange={handleChange}
+                                />
+                                <h3 className="">
+                                  {/* <RiArrowDropDownLine size="40" fill="gray" /> */}
+                                  {/* xddd */}
+                                </h3>
+                                </div>
+
+                          </div>
+                         <div className='column input '>
+                            <label className={css(styles.label)} 
+                              htmlFor="phoneno">Phone No:</label>
+                                <div className='  row input-container'>
+                                <input
+                                type='text' 
+                                name='phoneNo'
+                                id="phoneNo"
+                                value={phoneNo}
+                                required
+                                autoComplete='off'
+                                placeholder='+234 7******'
                                 onChange={handleChange}
                                 />
                                 <h3 className="">

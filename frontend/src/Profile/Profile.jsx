@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { styles } from '../Login.jsx/Login';
 import { useNavigate } from 'react-router-dom';
 import { MdEdit } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 
 export default function Profile({id, login}) {
@@ -13,12 +14,13 @@ export default function Profile({id, login}) {
     const [formData, setFormData] = useState({
         email:"",
         fullName:"",
-        region:""
+        region:"",
+        phoneNo:""
     })
 
     const navigate = useNavigate()
 
-    const {email, fullName, region} = formData
+    const {email, fullName, region, phoneNo} = formData
   
      
      const handleChange = (e) =>{
@@ -28,9 +30,10 @@ export default function Profile({id, login}) {
          }))
        }
     
-       const handleEdit = () =>{
-        setEdit(true)
-        console.log("edit")
+       const handleEdit = (e) =>{
+        e.preventDefault()
+        setEdit(p => !p)
+        console.log(edit)
        }
 
     useEffect(() => {
@@ -44,7 +47,8 @@ export default function Profile({id, login}) {
                     ...prev,
                     fullName: data.fullName,
                     email: data.email,
-                    region: data.region
+                    region: data.region,
+                    phoneNo: data.phoneNo
 
 
                 }))
@@ -60,18 +64,18 @@ export default function Profile({id, login}) {
     const submit = (e) =>{
         e.preventDefault()//lthis
         setLoading(true)
-        axios.post('http://localhost:3000/api/auth/login', formData)
+        axios.put(`http://localhost:3000/api/users/${id}`, formData)
         .then(({data}) => {
           console.log(data)
           login(data.user)
-          const id = data.user._id;
-          console.log(id)
-          navigate(`/api/index`)
+          toast.success("profile Update")
+          navigate(`/api/user/${id}`)
           setLoading(false)
   
         })
         .catch((err) => {
           console.log(err)
+          toast.error("profile not Updated")
           setLoading(false)
         })
     }
@@ -97,7 +101,7 @@ export default function Profile({id, login}) {
                                 value={email}
                                 autoComplete='off'
                                 required
-                                disabled
+                                disabled={edit}
                                 onChange={handleChange}
 
                                
@@ -114,12 +118,12 @@ export default function Profile({id, login}) {
                                 <input
                                 type='text' 
                                 name='fullName'
-                                id="FullName"
+                                id="fullName"
                                 placeholder='John Doe'
                                 value={fullName}
                                 autoComplete='off'
                                 required
-                                disabled
+                                disabled={edit}
                                 onChange={handleChange}
                                 />
                                
@@ -139,14 +143,35 @@ export default function Profile({id, login}) {
                                 value={region}
                                 autoComplete='off'
                                 required
-                                disabled
+                                disabled={edit}
                                 onChange={handleChange}
                                 />
                                   <MdEdit onClick={handleEdit}  size="20" fill="green" />
                                 </div>
 
                           </div>
-                          <input onSubmit ={submit} className='button'disabled={!edit}  type="submit" value="Update profile" />
+                          <div className='column input '>
+                            <label className={css(styles.label)} 
+                              htmlFor="PhoneNo">Phone No:</label>
+                                <div className='  row input-container '>
+                                <input
+                                type='text' 
+                                name='phoneNo'
+                                id="phoneNo"
+                                placeholder='+237 7*******'
+                                value={phoneNo}
+                                autoComplete='off'
+                                required
+                                disabled={edit}
+                                onChange={handleChange}
+                                />
+                                  <MdEdit onClick={handleEdit}  size="20" fill="green" />
+                                </div>
+
+                          </div>
+                          <button className='button lg:hidden' onClick={handleEdit}>{edit === true ? "Disable Mode" : "Edit Mode"}</button>
+
+                          <input onSubmit ={submit} className={`button ${ edit === true ? "bg-green text-white" : "button"}`}disabled={!edit}  type="submit" value="Update profile" />
 
                                               
                       </div>

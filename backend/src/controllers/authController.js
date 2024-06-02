@@ -6,9 +6,10 @@ const dotenv = require('../.env')
 
 
 
+
 const signup = async (req, res) => {
     try{
-        const { fullName, email, role, region, password } = req.body
+        const { fullName, email, role, region, password, phoneNo } = req.body
         const existingEmail = await User.findOne({email})
         if(existingEmail){
             res.status(400).json({message :'Email already exists. Please try a new Email'})
@@ -22,6 +23,7 @@ const signup = async (req, res) => {
             email,
             role,
             region,
+            phoneNo,
             password : hashedPassword
         })
         //saving new user

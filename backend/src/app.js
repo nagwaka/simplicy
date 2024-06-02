@@ -5,8 +5,9 @@ const connectDB = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
 const productRoutes = require('./routes/productRoutes')
-const setupSwagger = require('./config/swagger');
 const photoRoutes = require('./routes/photoRoutes')
+const path = require("path")
+
 
 
 // loading env variables

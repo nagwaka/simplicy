@@ -5,12 +5,9 @@ import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import { UserContext } from '../Config/UserContext';
 import Cookies from 'js-cookie';
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { toast } from 'react-toastify';
 
-// import { BsCloudUpload } from 'react-icons/bs'
-// import axios from 'axios'
-// import Perks from '../Component/Perks'
-// import Photos from '../Component/Photos'
+
 
 
 export default function ProductPage({seller, role}) {
@@ -20,6 +17,7 @@ export default function ProductPage({seller, role}) {
   const {AuthUser} = useContext(UserContext)
   const id = seller
   console.log(id,role, 'dd')
+  const navigate = useNavigate()
 
 useEffect(()=> {
 
@@ -45,7 +43,7 @@ useEffect(()=> {
 }, [id])
 
 
-async function handleDelete(e, product_id) {
+function handleDelete(e, product_id) {
   e.preventDefault()
   const token = Cookies.get("token")
     console.log(token)
@@ -57,18 +55,20 @@ async function handleDelete(e, product_id) {
   // Ask for confirmation before deleting
   const confirmDelete = alert("Are you sure you want to delete this product?");
   console.log(product_id)
-  if (confirmDelete && product_id) {
-    await axios.delete(`http://localhost:3000/api/products/${product_id}`, {
+  if (confirmDelete) {
+     axios.delete(`http://localhost:3000/api/products/${product_id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }).then(response => {
         console.log( response,"Product deleted successfully");
-        alert("Product deleted successfully");
+        toast.success("Product deleted successfully");
+        navigate(`/api/user/${seller}`)//seller is seller_id
         console.log(products)
       })
       .catch(error => {
         // Handle errors
+        toast.error("product not deleted")
         console.error("Error deleting product:", error);
         // Optionally, you can handle errors and notify the user
       });
@@ -101,8 +101,7 @@ async function handleDelete(e, product_id) {
              
                 <div className='grow-0 shrink '>
                     <div className='text-black '>
-                      <h2 className='text-2xl font-bold'>{product.createdAt}</h2>
-                      
+                    <h2 className='text-2xl font-bold'>{product.createdAt}</h2>                      
                       <div className='flex space-x-4 items-center gap-4'>
                       <p  className='text-xl'>Seller: <span className='text-xm mt-2 font-bold'>{AuthUser.user.fullName}</span></p>
                         <Link to={'/api/updateProduct/' + product._id}>

@@ -57,7 +57,7 @@
     height: 50px;;
     border-radius: 10px;
     padding: 2px 1rem ;
-    /* display: flex; */
+    display: flex;
 
 
 }
@@ -67,10 +67,10 @@
   }
   
   .input-container:disabled {
-    background: gray;
+    /* background: gray; */
   }
   input:disabled {
-    background: rgb(214, 213, 213);
+    /* background: rgb(214, 213, 213); */
     border-radius: 8px;
   }
   
