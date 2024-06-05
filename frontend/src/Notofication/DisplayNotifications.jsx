@@ -1,9 +1,10 @@
 import { StyleSheet, css } from 'aphrodite'
-import React from 'react'
+import React, { useContext } from 'react'
 import NotificationItem from './NotificationItem'
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { UserContext } from '../Config/UserContext';
 
 
 export default function DisplayNotifications({
@@ -11,9 +12,13 @@ export default function DisplayNotifications({
         handleHideDrawer,
         markNotificationAsRead,
         displayDrawer,
-        logout
+        logout,
+        
       }) 
 {
+
+   const {AuthUser} = useContext(UserContext)
+   console.log(AuthUser)
   const navigate = useNavigate()
   const markAsRead = (id) => {
     console.log(`Notification ${id} has been marked as read`);
@@ -61,13 +66,12 @@ export default function DisplayNotifications({
           </ul>
 
           <div className="mx-auto">
-            <Link to={'/api/user/id'}>
+            <Link to={`/api/user/${AuthUser.user._id}`}>
             <p>Dashboard</p>
             </Link>
-           
 
-          <button onClick={handleLogout} className='button-logout mt-6 mx-auto text-black'>logout</button>
           </div>
+          <button onClick={handleLogout} className=' button-logout mt-6 mx-[150px] text-black'>logout</button>
 
         </div>)}
          </>
@@ -77,7 +81,7 @@ export default function DisplayNotifications({
 
 const styles = StyleSheet.create({
   displayNav:{
-    border: '2px dashed red',
+    borderRadius:"10px",
     width: '30%',
     position: 'absolute',
     top:"6rem",
@@ -85,9 +89,8 @@ const styles = StyleSheet.create({
     zIndex:100000,
     padding: '2rem',
     color:"black",
-    // backgroundColor:"red",
-    // background:"red",
-    // fontSize: 'var(--font-x-small)',
+    background:"rgba(0, 0, 0, 0.3)",
+    
     "@media (max-width: 767px)" :{
      
        width: '100%',

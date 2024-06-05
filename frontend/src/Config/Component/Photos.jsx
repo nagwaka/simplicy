@@ -10,7 +10,7 @@ export default function Photos({selectAsMainPhoto, removePhoto, photoLinks, hand
                 <div className='flex space-x-3'>
                     <input type="text input" className=' bg-white rounded-2xl px-4 hover:bg-grey-400 hover:border-green-400'
                      name='photoLinks' id='photoLinks' value = {photoLinks} onChange={handleChange} placeholder='{Add using a link ...jpg, PNG}' />
-                    <button onClick={addPhotoLink} disabled className='button '>Add&nbsp;Photo</button>
+                    <button onClick={addPhotoLink} disable className='button '>Add&nbsp;Photo</button>
                 </div>
 
                 <div className=" grid mt-2 grid-cols-3 lg:grid-cols-6 md:grid-cols-4">

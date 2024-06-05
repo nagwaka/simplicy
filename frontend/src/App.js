@@ -133,7 +133,8 @@ export class App extends Component {
             handleHideDrawer= {this.handleHideDrawer}
             handleDisplayDrawer= {this.handleDisplayDrawer}
             markNotificationAsRead={this.markNotificationAsRead}
-            logout={this.logOut}/>
+            logout={this.logOut}
+            />
           <Header  handleDisplayDrawer= {this.handleDisplayDrawer} userRole={this.state.role}/>
           
           <Routes>

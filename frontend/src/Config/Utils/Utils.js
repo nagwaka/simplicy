@@ -12,4 +12,4 @@ export function getFooterCopy(isIndex) {
 
 }
 
-export const getLatestNotification = () => "<strong className={`text-white`}>Profile Update</strong> - !!important";
+export const getLatestNotification = () => "<strong className={`text-green-400`}>Profile Update</strong> - !!important";

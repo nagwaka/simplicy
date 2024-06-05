@@ -38,7 +38,7 @@ export default function Product() {
          console.log(products)
       }, [id]);
 
-  const position = [51.505, -0.09]
+  // const position = [51.505, -0.09]
 
 
   return (
@@ -57,11 +57,11 @@ export default function Product() {
           {/* <div> */}
             {products.images && products.images.map((url, index) => (
               <SwiperSlide key={index}>
-                <div
-                  className=' w-full overflow-hidden bg-red-500 z-10000  h-[300px]' 
-                  style={{ background: `url{}}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}>
-                <img  className='rounded-2xl w-full h-[100%] object-cover' src={`http://localhost:3000/uploads/${url}`} alt={index} />
-                </div>
+                {/* <div
+                  className=' w-full overflow-hidden  z-10000  h-[400px]' 
+                  style={{ background: `url{}}) center no-repeat`, backgroundSize: 'cover',zIndex:"1000000" }}> */}
+                <img className='rounded-2xl w-full h-[500px] object-cover object-center' src={`http://localhost:3000/uploads/${url}`} alt={index} />
+                {/* </div> */}
               </SwiperSlide>
             ))}
             {/* </div> */}
@@ -83,6 +83,7 @@ export default function Product() {
             Link Copied
           </p>
         )}
+        
 
         {products && (
           <div className='gap-10 text-white mt-6 flex-col md:flex-row max-w-6xl lg:mx-auto m-4 p-4 rounded-lg shadow-lg  space-y-5 lg:space-x-5 '>
@@ -105,7 +106,7 @@ export default function Product() {
               <ul className='flex items-center sm:space-x-10 md:space-x-3 text-sm font-semibold'>
                 <li className='font-semibold text-2xl flex items-center whitespace-nowrap '>
                   <MdOutlineShoppingBag size={"20px"} className='text-lg mr-1' />
-                  {+products.stock < 0 ? `0 Stocks` : `${products.stock} Stock`}
+                  {+products.stock < 0 ? `0 Stocks` : `${products.stock?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} Stock`}
 
                 </li>
                 {
@@ -121,19 +122,19 @@ export default function Product() {
               </ul>
 
               <div className='flex mt-2 flex-col text-sm lg:text-lg space-y-4'>
-                {(products.seller || contactLandLord === true) && (
+                {(products.seller) && (
                      <div className='mt-2'>
                         <Contact sellerId={products.seller}/>
                      </div>
                  
                 )}
-                {!contactLandLord  && 
+                {/* {AuthUser.user !== nukll  && 
                 <button 
-                 onClick={() => setContactLandLord(true)}
+                
                 className ='bg-blue-600 rounded-md p-4 text-white font-semibold hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 transition duration-150 ease-in-out'>
-                    Contact Seller
+                    {AuthUser.user.name}
                 </button>
-                }
+                } */}
                 
               </div>
             </div>

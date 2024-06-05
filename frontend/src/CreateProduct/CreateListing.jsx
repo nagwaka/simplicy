@@ -70,8 +70,9 @@ export default function CreateListing({userId, user}) {
           })
             .then(({data}) => {
               console.log(data)
-              toast.success("product successful updated")
               navigate(`/api/user/${userId}`)
+              toast.success("product successful updated")
+             
         
             })
             .catch((err) => {
@@ -105,7 +106,7 @@ useEffect (() => {
       ...prev,
       name: data.name,
       description: data.description,
-      images: [...prev.images, data.images],
+      images: [data.images],
       // photoLinks: [...prev.photoLinks, data.photoLinks],
       category: data.category,
       price: data.price,
